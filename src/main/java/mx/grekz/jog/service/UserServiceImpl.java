@@ -36,12 +36,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) {
-		// TODO I need to implement this
+	public synchronized boolean updateUser(User user) {
+		int userId = user.getUserId();
+		boolean userExists = userDAO.userExists(userId);
+		if (userExists) {
+			userDAO.updateUser(user);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void deleteUser(int id) {
 		userDAO.deleteUser(id);
+	}
+
+	@Override
+	public boolean userExists(Integer userId) {
+		return userDAO.userExists(userId);
+	}
+
+	@Override
+	public boolean userExists(User user) {
+		return userDAO.userExists(user);
 	}
 }

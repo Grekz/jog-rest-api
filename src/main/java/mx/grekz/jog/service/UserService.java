@@ -10,8 +10,12 @@ public interface UserService {
 	User getUserById(int userId);
 
 	boolean addUser(User user);
+	
+	boolean userExists(Integer userId);
+	
+	boolean userExists(User user);
 
-	void updateUser(User user);
+	boolean updateUser(User user);
 
 	void deleteUser(int id);
 }

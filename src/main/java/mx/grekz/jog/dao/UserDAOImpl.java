@@ -35,8 +35,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void updateUser(User user) {
-		// TODO: implement this
+	public User updateUser(User user) {
+		return manager.merge(user);
 	}
 
 	@Override
@@ -50,6 +50,13 @@ public class UserDAOImpl implements UserDAO {
 		int count = manager.createQuery(hql).setParameter(1, usr.getEmail()).setParameter(2, usr.getUsername())
 				.getResultList().size();
 
+		return count > 0;
+	}
+
+	@Override
+	public boolean userExists(Integer userId) {
+		String hql = "from User as usr where usr.id = :id ";
+		int count = manager.createQuery(hql).setParameter("id", userId).getResultList().size();
 		return count > 0;
 	}
 

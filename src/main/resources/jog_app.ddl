@@ -1,50 +1,11 @@
 
 CREATE DATABASE IF NOT EXISTS jog_app
-
-  DEFAULT CHARACTER SET utf8
-
-  DEFAULT COLLATE utf8_general_ci;
-
-CREATE TABLE IF NOT EXISTS jog_app.users(
-  id 	   	INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
-  username 	VARCHAR(50)  	 NOT NULL COMMENT 'Username prefered by the user',
-  email	   	VARCHAR(256) 	 NOT NULL COMMENT 'Email of the user',
-  password	CHAR(128)    	 NOT NULL COMMENT 'Password hashed SHA-512 of the user',
-  first_name 	VARCHAR(128) 	 NOT NULL COMMENT 'First name of the user',
-  last_name  	VARCHAR(128) 	 NOT NULL COMMENT 'Last name of the user',
-  enabled	TINYINT(1)   	 NOT NULL DEFAULT 0 COMMENT 'Boolean to know if the user is enabled to make request',
-  role     	VARCHAR(10)  	 NOT NULL DEFAULT 'USER' COMMENT 'Role of the user',
-  units    	VARCHAR(10)  	 NOT NULL DEFAULT 'KM'   COMMENT 'Units to use in distance for the user',
-  create_date 	TIMESTAMP 	 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  update_date 	TIMESTAMP 	 NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
-  CONSTRAINT users_pk PRIMARY KEY (id),
-  INDEX ix_username (username)
-);
-
-CREATE TABLE IF NOT EXISTS jog_app.jogs(
-  id	INT(32)		UNSIGNED NOT NULL AUTO_INCREMENT,
-  date  DATE			 NOT NULL COMMENT 'Date of the jog session',
-  distance MEDIUMINT(6) UNSIGNED NOT NULL COMMENT 'Distance jogged in meters',
-  time  MEDIUMINT(6)	UNSIGNED NOT NULL COMMENT 'Duration of jog session in seconds',
-  users_id INT(16)      UNSIGNED NOT NULL COMMENT 'The id of the user that made this entry',
-  create_date 	TIMESTAMP 	 NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  update_date 	TIMESTAMP 	 NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
-  CONSTRAINT jogs_pk PRIMARY KEY (id),
-  CONSTRAINT users_id_fk FOREIGN KEY (users_id)
-    REFERENCES users(id),
-  INDEX ix_date (date),
-  INDEX ix_users_id (users_id)  
-);
-
-
-
-CREATE DATABASE IF NOT EXISTS jog_app
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
   
 USE jog_app;
 CREATE TABLE IF NOT EXISTS jog_app.users(
-  id        INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+  id        INT(32) NOT NULL AUTO_INCREMENT,
   password    CHAR(128)        NOT NULL COMMENT 'Password hashed of the user',
   username    VARCHAR(50)    NOT NULL COMMENT 'Username prefered by the user',
   email       VARCHAR(256)     NOT NULL COMMENT 'Email of the user',
@@ -61,11 +22,11 @@ CREATE TABLE IF NOT EXISTS jog_app.users(
 
 USE jog_app;
 CREATE TABLE IF NOT EXISTS jog_app.jogs(
-  id      INT(32)    UNSIGNED   NOT NULL AUTO_INCREMENT,
+  id      INT(32)       NOT NULL AUTO_INCREMENT,
   date      DATE          NOT NULL COMMENT 'Date of the jog session',
-  distance    MEDIUMINT(6) UNSIGNED   NOT NULL COMMENT 'Distance jogged in meters',
-  duration    MEDIUMINT(6) UNSIGNED   NOT NULL COMMENT 'Duration of jog session in seconds',
-  users_id    INT(16)    UNSIGNED   NOT NULL COMMENT 'The id of the user that made this entry',
+  distance    INT(32)    NOT NULL COMMENT 'Distance jogged in meters',
+  duration    INT(32)    NOT NULL COMMENT 'Duration of jog session in seconds',
+  users_id    INT(32)       NOT NULL COMMENT 'The id of the user that made this entry',
   create_date   TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP,
   update_date   TIMESTAMP         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
   CONSTRAINT jogs_pk   PRIMARY KEY (id),
