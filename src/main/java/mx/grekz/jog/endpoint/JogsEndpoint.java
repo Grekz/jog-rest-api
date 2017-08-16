@@ -3,7 +3,6 @@ package mx.grekz.jog.endpoint;
 import java.net.URI;
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,9 +22,7 @@ import org.springframework.stereotype.Component;
 
 import mx.grekz.jog.entity.ErrorMessage;
 import mx.grekz.jog.entity.Jog;
-import mx.grekz.jog.entity.User;
 import mx.grekz.jog.service.JogService;
-import mx.grekz.jog.service.UserService;
 
 @Component
 @Path("/users/{userId}/jogs")

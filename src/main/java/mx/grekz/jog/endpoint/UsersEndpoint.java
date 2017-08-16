@@ -3,7 +3,6 @@ package mx.grekz.jog.endpoint;
 import java.net.URI;
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,17 +31,16 @@ public class UsersEndpoint {
 	private static final Logger logger = LoggerFactory.getLogger(UsersEndpoint.class);
 	private final String repeatedTemplate = "Trying to create repeated user. With values = [ %s, %s]";
 	private static final String MT_JSON = MediaType.APPLICATION_JSON;
-	
+
 	@Autowired
-	private UserService userService;	
-	
+	private UserService userService;
 
 	@GET
 	public Response getAllUsers() {
 		List<User> list = userService.getAllUsers();
 		return list.size() > 0 ? Response.ok(list).build() : Response.noContent().build();
 	}
-	
+
 	@GET
 	@Path("/{id}")
 	public Response getUserById(@PathParam("id") Integer id) {
@@ -54,13 +52,13 @@ public class UsersEndpoint {
 	@Consumes(MT_JSON)
 	public Response addUser(User user) {
 		boolean wasAdded = userService.addUser(user);
-		if ( !wasAdded ) {
+		if (!wasAdded) {
 			logger.info(String.format(repeatedTemplate, user.getEmail(), user.getUsername()));
 			return Response.status(Status.CONFLICT).build();
 		}
 		return Response.created(URI.create("/v1/users/" + user.getUserId())).entity(user).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
 	@Consumes(MT_JSON)
@@ -69,18 +67,18 @@ public class UsersEndpoint {
 		System.out.println(userExists);
 		if (userExists) {
 			user.setUserId(id);
-			if ( !userService.updateUser(user) )
+			if (!userService.updateUser(user))
 				return Response.status(Status.NOT_MODIFIED).entity(user).build();
 			return Response.status(Status.ACCEPTED).entity(user).build();
 		}
 		return Response.status(Status.BAD_REQUEST).entity(new ErrorMessage("UserID not found")).build();
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
 	public Response deleteUser(@PathParam("id") Integer id) {
 		userService.deleteUser(id);
 		return Response.noContent().build();
 	}
-	
+
 }

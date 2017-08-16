@@ -13,9 +13,7 @@ import mx.grekz.jog.endpoint.UsersEndpoint;
 @ApplicationPath("/v1")
 public class JerseyConfig extends ResourceConfig{
 	public JerseyConfig() {
-//		register(RequestContextFilter.class);
 		register(UsersEndpoint.class);
 		register(JogsEndpoint.class);
-		//register(JogEndpoint.class);
 	}
 }

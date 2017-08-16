@@ -20,7 +20,7 @@ public class JogDAOImpl implements JogDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private static final String qry = "from Jog as jog ";
 	private static final String qryById = qry + " where jog.userId = :userId ";
@@ -62,14 +62,14 @@ public class JogDAOImpl implements JogDAO {
 
 	@Override
 	public Jog getJogById(int userId, int jogId) {
-		return (Jog)getQuery(qryByUserAndJogIds, userId, jogId).getSingleResult();
+		return (Jog) getQuery(qryByUserAndJogIds, userId, jogId).getSingleResult();
 	}
 
 	@Override
 	public Jog getJogById(User user, int jogId) {
 		return getJogById(user.getUserId(), jogId);
 	}
-	
+
 	@Override
 	public Jog getJogById(int jogId) {
 		return em.find(Jog.class, jogId);
@@ -77,14 +77,14 @@ public class JogDAOImpl implements JogDAO {
 
 	@Override
 	public boolean addJog(int userId, Jog jog) {
-		//TODO implement properly
+		// TODO implement properly
 		jog.setUserId(userId);
 		return addJog(jog);
 	}
 
 	@Override
 	public boolean addJog(User user, Jog jog) {
-		return addJog(user.getUserId(),jog);
+		return addJog(user.getUserId(), jog);
 	}
 
 	@Override
@@ -128,11 +128,11 @@ public class JogDAOImpl implements JogDAO {
 	private Query getQuery(String queryStr, int userId) {
 		return em.createQuery(queryStr).setParameter("userId", userId);
 	}
-	
+
 	private Query getQuery(String queryStr, int userId, String ini, String end) {
 		return getQuery(queryStr, userId).setParameter("iniDate", ini).setParameter("endDate", end);
 	}
-	
+
 	private Query getQuery(String queryStr, int userId, int jogId) {
 		return getQuery(queryStr, userId).setParameter("jogId", jogId);
 	}

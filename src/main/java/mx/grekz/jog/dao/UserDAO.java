@@ -8,6 +8,7 @@ public interface UserDAO {
 	List<User> getAllUsers();
 	User getUserById(int userId);
 	void addUser(User user);
+
 	User updateUser(User user);
 	void deleteUser(int id);
 	boolean userExists(Integer userId);

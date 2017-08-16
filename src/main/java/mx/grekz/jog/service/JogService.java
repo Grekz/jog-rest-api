@@ -8,6 +8,7 @@ public interface JogService {
 	List<Jog> getAllJogsByUserId(int userId);
 	List<Jog> getJogsBetweenDates(int userId, String initialDate, String endDate);
 	Jog getJogById(int userId, int jogId);
+
 	Jog updateJog(Jog jog);
 	
 	boolean addJog(Jog jog);
